@@ -1,0 +1,26 @@
+{
+  "name": "anime-guess-who",
+  "version": "1.0.0",
+  "description": "Anime-themed Guess Who game with real-time multiplayer",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "game",
+    "multiplayer",
+    "anime",
+    "naruto"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "socket.io": "^4.6.1",
+    "axios": "^1.6.0"
+  },
+  "engines": {
+    "node": ">=18.x"
+  }
+}
