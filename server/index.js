@@ -22,7 +22,7 @@ const rooms = new Map();
 
 const CHAR_SETS = {
   bd_politics: [],
-  naruto: [], 
+  naruto: [],
   onepiece: [],
   classic: [],
 };
@@ -31,7 +31,7 @@ const CHAR_SETS = {
 for (let i = 1; i <= 30; i++) {
   CHAR_SETS.bd_politics.push({
     name: `Neta ${i}`,
-    img: `https://placehold.co/150x150/006341/FFFFFF?text=Neta+${i}`, 
+    img: `https://placehold.co/150x150/006341/FFFFFF?text=Neta+${i}`,
   });
 }
 
@@ -66,7 +66,7 @@ function createRoom(theme = 'bd_politics') {
   const code = randomCode(6);
   const room = {
     code,
-    theme: 'bd_politics', 
+    theme: 'bd_politics',
     players: {},
     playerOrder: [],
     board: createCharacters('bd_politics'),
@@ -286,14 +286,17 @@ io.on('connection', (socket) => {
   });
 
   socket.on('rtc-offer', ({ code, sdp }) => {
+    console.log(`[Signal] Offer from ${socket.id} in room ${code}`);
     if (!rooms.get(code)) return;
     socket.to(code).emit('rtc-offer', { from: socket.id, sdp });
   });
   socket.on('rtc-answer', ({ code, sdp }) => {
+    console.log(`[Signal] Answer from ${socket.id} in room ${code}`);
     if (!rooms.get(code)) return;
     socket.to(code).emit('rtc-answer', { from: socket.id, sdp });
   });
   socket.on('rtc-ice', ({ code, candidate }) => {
+    console.log(`[Signal] ICE from ${socket.id} in room ${code}`);
     if (!rooms.get(code)) return;
     socket.to(code).emit('rtc-ice', { from: socket.id, candidate });
   });
