@@ -47,17 +47,10 @@ let state = {
   crossed: new Set(),
   guessMode: false,
   callActive: false,
-  selectedTheme: 'naruto',
+  selectedTheme: 'bd_politics',
 };
 
-// Theme selection
-document.querySelectorAll('.theme-card').forEach(card => {
-  card.onclick = () => {
-    document.querySelectorAll('.theme-card').forEach(c => c.classList.remove('active'));
-    card.classList.add('active');
-    state.selectedTheme = card.dataset.theme;
-  };
-});
+// Theme selection removed (Single Theme Enforced)
 
 function setLobbyVisible(visible) {
   ui.lobby.classList.toggle('hidden', !visible);
@@ -67,24 +60,24 @@ function setLobbyVisible(visible) {
 function updateStatus() {
   const me = state.players.find((p) => p.id === state.you);
   const parts = [];
-  parts.push(`Room: ${state.code || '...'}`);
+  parts.push(`রুম: ${state.code || '...'}`);
 
   if (state.phase === 'selecting') {
     if (me?.secretId) {
-      parts.push('Waiting for Opponent...');
+      parts.push('প্রতিপক্ষের অপেক্ষায়...');
     } else {
-      parts.push('Choose your character');
+      parts.push('আপনার নেতা নির্বাচন করুন');
     }
   } else if (state.phase === 'playing') {
     if (state.currentTurn === state.you) {
-      parts.push('⚡ Your Turn');
+      parts.push('⚡ আপনার চাল');
     } else {
-      parts.push("⌛ Opponent's Turn");
+      parts.push("⌛ প্রতিপক্ষের চাল");
     }
   } else if (state.phase === 'finished') {
-    if (state.winner === 'draw') parts.push('⚔️ Result: Draw');
-    else if (state.winner === state.you) parts.push('🏆 You Win!');
-    else parts.push('💀 You Lose');
+    if (state.winner === 'draw') parts.push('⚔️ ড্র হয়েছে');
+    else if (state.winner === state.you) parts.push('🏆 আপনি জিতেছেন!');
+    else parts.push('💀 আপনি হেরেছেন');
   }
   ui.status.textContent = parts.join(' • ');
 
@@ -107,9 +100,9 @@ function updateStatus() {
     const link = `${location.origin}/?room=${state.code}`;
     ui.roomInfo.innerHTML = `
       <div class="room-share">
-        <span>Room: <strong>${state.code}</strong></span>
-        <button class="btn-small" onclick="navigator.clipboard.writeText('${link}').then(() => alert('Link copied!'))">
-          Copy Link 🔗
+        <span>রুম: <strong>${state.code}</strong></span>
+        <button class="btn-small" onclick="navigator.clipboard.writeText('${link}').then(() => alert('লিংক কপি হয়েছে!'))">
+          লিংক কপি করুন 🔗
         </button>
       </div>
     `;
@@ -124,7 +117,14 @@ let remoteStream = null;
 
 async function ensureLocalStream() {
   if (localStream) return localStream;
-  localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+  localStream = await navigator.mediaDevices.getUserMedia({
+    video: {
+      width: { ideal: 640 },
+      height: { ideal: 480 },
+      frameRate: { ideal: 15, max: 20 }
+    },
+    audio: true
+  });
   ui.localVideo.srcObject = localStream;
   return localStream;
 }
@@ -233,7 +233,7 @@ function renderSecret() {
   const tile = state.board.find((c) => c.id === secretId);
   ui.mySecret.innerHTML = tile
     ? `<div class="tile"><img src="${tile.image}"/><div>${tile.name}</div></div>`
-    : '<div class="tip">Not selected</div>';
+    : '<div class="tip">নির্বাচন করা হয়নি</div>';
 }
 
 function showGameEndModal() {
@@ -247,17 +247,17 @@ function showGameEndModal() {
   let resultClass = '';
 
   if (state.winner === 'draw') {
-    resultText = '⚔️ DRAW!';
+    resultText = '⚔️ ড্র!';
     resultClass = 'draw';
-    ui.modalTitle.textContent = 'GAME OVER';
+    ui.modalTitle.textContent = 'খেলা শেষ';
   } else if (state.winner === state.you) {
-    resultText = '🏆 VICTORY!';
+    resultText = '🏆 আপনি জিতেছেন!';
     resultClass = 'win';
-    ui.modalTitle.textContent = 'YOU WIN!';
+    ui.modalTitle.textContent = 'বিজয়!';
   } else {
-    resultText = '💀 DEFEAT';
+    resultText = '💀 আপনি হেরেছেন';
     resultClass = 'lose';
-    ui.modalTitle.textContent = 'GAME OVER';
+    ui.modalTitle.textContent = 'খেলা শেষ';
   }
 
   ui.modalResult.textContent = resultText;
@@ -293,7 +293,7 @@ function renderBoard() {
         if (state.guessMode && state.currentTurn === state.you) {
           socket.emit('guessCharacter', { code: state.code, characterId: c.id });
           state.guessMode = false;
-          ui.guessModeBtn.textContent = 'Guess Character';
+          ui.guessModeBtn.textContent = 'নেতা গেস করুন';
           ui.guessModeBtn.classList.remove('highlight');
         } else {
           state.crossed.has(c.id)
@@ -321,7 +321,7 @@ function addMessage(msg) {
 ui.createRoomBtn.onclick = () => {
   socket.emit('createRoom', { theme: state.selectedTheme }, (res) => {
     if (res?.code) {
-      const name = ui.yourName.value || 'Shinobi';
+      const name = ui.yourName.value || 'খেলোয়াড়';
       socket.emit('joinRoom', { code: res.code, name }, (joinRes) => {
         if (joinRes?.ok) {
           state.code = res.code;
@@ -352,7 +352,7 @@ ui.joinRoomBtn.onclick = () => {
       updateStatus();
       renderBoard();
     } else {
-      alert(joinRes?.error || 'Join failed');
+      alert(joinRes?.error || 'জয়েন করা সম্ভব হয়নি');
     }
   });
 };
@@ -375,7 +375,7 @@ ui.endTurnBtn.onclick = () => {
 ui.guessModeBtn.onclick = () => {
   if (state.phase !== 'playing' || state.currentTurn !== state.you) return;
   state.guessMode = !state.guessMode;
-  ui.guessModeBtn.textContent = state.guessMode ? 'Select character to guess' : 'Guess Character';
+  ui.guessModeBtn.textContent = state.guessMode ? 'যাকে সন্দেহ করেন তাকে ক্লিক করুন' : 'নেতা গেস করুন';
   ui.guessModeBtn.classList.toggle('highlight', state.guessMode);
 };
 
@@ -394,7 +394,7 @@ ui.modeVideoBtn.onclick = () => {
 
 ui.startCallBtn.onclick = () => {
   if (state.callActive) return;
-  ui.startCallBtn.textContent = 'Requesting...';
+  ui.startCallBtn.textContent = 'কল যাচ্ছে...';
   socket.emit('requestCall', { code: state.code });
 };
 
@@ -402,7 +402,7 @@ socket.on('incomingCall', ({ from }) => {
   // Simple custom confirmation (browser confirm is blocking, but easy for now. 
   // User asked for "option to start a call or not", a modal is better but confirm is standard first step)
   // Let's make a custom non-blocking UI element appear.
-  const accept = confirm("Incoming Video Call! Accept?");
+  const accept = confirm("ইনকামিং ভিডিও কল! রিসিভ করবেন?");
   if (accept) {
     socket.emit('callAccepted', { code: state.code });
     ui.modeVideoBtn.click(); // Auto-switch to video tab
@@ -414,15 +414,15 @@ socket.on('incomingCall', ({ from }) => {
 });
 
 socket.on('callAccepted', () => {
-  ui.startCallBtn.textContent = 'Call Accepted!';
+  ui.startCallBtn.textContent = 'কল রিসিভ হয়েছে!';
   ui.modeVideoBtn.click(); // Auto-switch to video tab
-  setTimeout(() => ui.startCallBtn.textContent = 'Start Video Call', 2000);
+  setTimeout(() => ui.startCallBtn.textContent = 'ভিডিও কল শুরু করুন', 2000);
   startCall();
 });
 
 socket.on('callDeclined', () => {
-  alert("Call declined by opponent.");
-  ui.startCallBtn.textContent = 'Start Video Call';
+  alert("কল রিসিভ করা হয়নি।");
+  ui.startCallBtn.textContent = 'ভিডিও কল শুরু করুন';
 });
 
 ui.endCallBtn.onclick = () => endCall();
@@ -430,13 +430,13 @@ ui.muteMicBtn.onclick = () => {
   if (!localStream) return;
   const tracks = localStream.getAudioTracks();
   tracks.forEach((t) => (t.enabled = !t.enabled));
-  ui.muteMicBtn.textContent = tracks.some((t) => t.enabled) ? 'Mute' : 'Unmute';
+  ui.muteMicBtn.textContent = tracks.some((t) => t.enabled) ? 'মিউট' : 'আনমিউট';
 };
 ui.muteCamBtn.onclick = () => {
   if (!localStream) return;
   const tracks = localStream.getVideoTracks();
   tracks.forEach((t) => (t.enabled = !t.enabled));
-  ui.muteCamBtn.textContent = tracks.some((t) => t.enabled) ? 'Video Off' : 'Video On';
+  ui.muteCamBtn.textContent = tracks.some((t) => t.enabled) ? 'ভিডিও বন্ধ' : 'ভিডিও চালু';
 };
 
 ui.playAgainBtn.onclick = () => {

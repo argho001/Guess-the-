@@ -1,12 +1,12 @@
 :root {
-  --bg-color: #0f172a;
-  --glass-bg: rgba(255, 255, 255, 0.05);
-  --glass-border: rgba(255, 255, 255, 0.1);
-  --primary: #38bdf8;
-  --secondary: #818cf8;
-  --accent: #f472b6;
-  --text: #f8fafc;
-  --text-dim: #94a3b8;
+  --bg-color: #006341;
+  --glass-bg: rgba(0, 40, 20, 0.4);
+  --glass-border: rgba(244, 42, 65, 0.3);
+  --primary: #F42A41;
+  --secondary: #00905C;
+  --accent: #FFFFFF;
+  --text: #FFFFFF;
+  --text-dim: #D1E7DD;
   --radius: 16px;
 }
 
@@ -14,11 +14,11 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Hind Siliguri', sans-serif;
 }
 
 body {
-  background: radial-gradient(circle at top left, #1e1b4b, #0f172a);
+  background: radial-gradient(circle at top left, #004d30, #006341);
   color: var(--text);
   min-height: 100vh;
   display: flex;
@@ -41,6 +41,22 @@ body {
   flex-direction: column;
 }
 
+
+.ad-banner {
+  width: 100%;
+  height: 90px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--glass-border);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 0;
+  color: var(--text-dim);
+  font-size: 0.8rem;
+  border-radius: 8px;
+  box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
 header {
   text-align: center;
   margin-bottom: 40px;
@@ -49,7 +65,7 @@ header {
 .glow-text {
   font-size: 3rem;
   font-weight: 800;
-  background: linear-gradient(to right, var(--primary), var(--secondary));
+  background: linear-gradient(to right, #F42A41, #FFFFFF);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -177,7 +193,7 @@ button.disabled {
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  background: linear-gradient(135deg, #F42A41, #D31A2F);
   color: white;
   padding: 16px;
   font-size: 1.1rem;
@@ -560,18 +576,186 @@ video {
   font-weight: 600;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1024px) {
   .game-layout {
-    grid-template-columns: 1fr;
-    /* Stack on mobile */
+    display: flex;
+    flex-direction: column;
     height: auto;
-    overflow-y: auto;
+    overflow: visible;
   }
 
   .game-side {
-    order: -1;
-    /* Sidebar with secret/chat on top for mobile */
-    height: 400px;
+    order: 2;
+    margin-top: 10px;
+    height: auto;
+  }
+}
+
+@media (max-width: 600px) {
+  .glass-container {
+    width: 100%;
+    min-height: 100vh;
+    border-radius: 0;
+    border: none;
+    padding: 4px;
+    background: rgba(0, 40, 20, 0.95);
+    display: flex;
+    flex-direction: column;
+    /* overflow: hidden removed to allow scrolling */
+  }
+
+  header {
+    margin-bottom: 2px;
+    flex-shrink: 0;
+  }
+
+  .glow-text {
+    font-size: 1.4rem;
+    margin: 4px 0;
+  }
+
+  /* ADS FIX */
+  .ad-banner {
+    width: 100%;
+    height: 50px;
+    /* Force small height container */
+    overflow: hidden;
+    background: transparent;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    /* Align to top */
+    margin: 2px 0;
+    flex-shrink: 0;
+  }
+
+  .ad-banner iframe,
+  .ad-banner>div {
+    transform: scale(0.6);
+    /* Shrink the ad visually */
+    transform-origin: top center;
+  }
+
+  /* Compact Controls */
+  .topbar-glass {
+    flex-direction: row;
+    padding: 4px;
+    gap: 4px;
+    min-height: auto;
+    flex-shrink: 0;
+  }
+
+  .game-controls {
+    gap: 4px;
+  }
+
+  .btn-small {
+    padding: 4px 8px;
+    font-size: 0.7rem;
+  }
+
+  /* STRICT BOARD - BUT ALLOW SCROLL */
+  .board-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 3px;
+    padding: 0;
+
+    flex: 1;
+    /* Fill all remaining space */
+    min-height: 0;
+    /* Allow shrinking */
+    overflow: visible;
+    /* Changed from hidden */
+    height: auto;
+    /* Allow growth */
+  }
+
+  .tile {
+    padding: 2px;
+    border-radius: 6px;
+    min-height: 110px;
+    /* Taller tiles for better visibility */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .tile img {
+    height: 65%;
+    /* Restrict image height */
+    width: auto;
+    object-fit: contain;
+  }
+
+  .tile .name {
+    font-size: 0.6rem;
+    margin-top: 2px;
+    line-height: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    text-align: center;
+  }
+
+  /* Sidebar */
+  .game-side {
+    margin-top: 20px;
+    height: auto;
+    max-height: none;
+    /* No cap */
+    flex-shrink: 0;
+    gap: 4px;
+    overflow: visible;
+  }
+
+  .my-secret-card {
+    padding: 2px 8px;
+    min-height: 30px;
+  }
+
+  .my-secret-card .label {
+    font-size: 0.6rem;
+  }
+
+  .comm-panel {
+    flex: none;
+    /* Fixed height for chat */
+    height: 350px;
+    min-height: 350px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .tab-btn {
+    padding: 6px;
+    font-size: 0.7rem;
+  }
+
+  .chat-container {
+    padding: 2px;
+  }
+
+  .chat-input-area input {
+    padding: 6px;
+    font-size: 16px;
+  }
+
+  /* SHOW bottom ad on mobile now */
+  .ad-banner-native {
+    display: block !important;
+    margin-top: 20px;
+    margin-bottom: 60px;
+  }
+
+  body {
+    align-items: flex-start;
+    overflow-y: auto;
+    /* Enable scroll */
+    height: auto;
   }
 }
 

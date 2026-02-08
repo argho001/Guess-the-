@@ -4,54 +4,47 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Guess Who? - Anime Edition</title>
+  <title>Guess the Neta</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;600;700&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="/style.css" />
 </head>
 
 <body>
   <div class="glass-container">
     <header>
-      <h1 class="glow-text">Guess Who?</h1>
+      <div class="ad-banner">
+        <script type="text/javascript">
+          atOptions = {
+            'key': '6076973c857f28e285dc9f8d6fe59332',
+            'format': 'iframe',
+            'height': 90,
+            'width': 728,
+            'params': {}
+          };
+        </script>
+        <script type="text/javascript"
+          src="//www.highperformanceformat.com/6076973c857f28e285dc9f8d6fe59332/invoke.js"></script>
+      </div>
+      <h1 class="glow-text">গেস দ্য নেতা</h1>
       <div id="roomInfo"></div>
     </header>
 
     <section id="lobby" class="panel">
       <div class="lobby-controls">
         <div class="input-group">
-          <label for="yourName">Your Shinobi Name</label>
-          <input id="yourName" placeholder="Enter name..." />
-        </div>
-
-        <div class="theme-picker">
-          <h3>Choose Your World</h3>
-          <div class="theme-options">
-            <div class="theme-card active" data-theme="naruto">
-              <div class="card-inner">
-                <span>Naruto</span>
-              </div>
-            </div>
-            <div class="theme-card disabled" data-theme="onepiece" style="opacity: 0.5; pointer-events: none;">
-              <div class="theme-inner">
-                <span>One Piece (Soon)</span>
-              </div>
-            </div>
-            <div class="theme-card disabled" data-theme="classic" style="opacity: 0.5; pointer-events: none;">
-              <div class="theme-inner">
-                <span>Classic (Soon)</span>
-              </div>
-            </div>
-          </div>
+          <label for="yourName">আপনার নাম</label>
+          <input id="yourName" placeholder="নাম লিখুন..." />
         </div>
 
         <div class="action-buttons">
-          <button id="createRoomBtn" class="btn-primary">Create Secret Room</button>
-          <div class="divider"><span>OR</span></div>
+          <button id="createRoomBtn" class="btn-primary">রুম তৈরি করুন</button>
+          <div class="divider"><span>অথবা</span></div>
           <div class="join-group">
-            <input id="joinCode" placeholder="Room Code" maxlength="10" />
-            <button id="joinRoomBtn" class="btn-secondary">Join Room</button>
+            <input id="joinCode" placeholder="রুম কোড" maxlength="10" />
+            <button id="joinRoomBtn" class="btn-secondary">জয়েন করুন</button>
           </div>
         </div>
       </div>
@@ -63,35 +56,47 @@
           <div class="topbar-glass">
             <div id="status" class="status-badge"></div>
             <div class="game-controls">
-              <button id="endTurnBtn" class="btn-small">End Turn</button>
-              <button id="guessModeBtn" class="btn-small highlight">Guess Character</button>
+              <button id="endTurnBtn" class="btn-small">চাল শেষ</button>
+              <button id="guessModeBtn" class="btn-small highlight">নেতা গেস করুন</button>
             </div>
           </div>
-
+          <div class="ad-banner">
+            <script type="text/javascript">
+              atOptions = {
+                'key': '6076973c857f28e285dc9f8d6fe59332',
+                'format': 'iframe',
+                'height': 90,
+                'width': 728,
+                'params': {}
+              };
+            </script>
+            <script type="text/javascript"
+              src="//www.highperformanceformat.com/6076973c857f28e285dc9f8d6fe59332/invoke.js"></script>
+          </div>
           <div id="board" class="board-grid"></div>
         </div>
 
         <aside class="game-side">
           <div class="my-secret-card">
-            <span class="label">My Choice</span>
+            <span class="label">আমার চয়েস</span>
             <div id="mySecret" class="secret-display"></div>
           </div>
 
           <div class="comm-panel">
             <div class="comm-tabs">
-              <button id="modeChatBtn" class="tab-btn active">Chat</button>
-              <button id="modeVideoBtn" class="tab-btn">Video</button>
+              <button id="modeChatBtn" class="tab-btn active">চ্যাট</button>
+              <button id="modeVideoBtn" class="tab-btn">ভিডিও</button>
             </div>
 
             <div id="chat" class="chat-container">
               <div id="messages" class="message-log"></div>
               <div class="chat-input-area">
-                <input id="chatInput" placeholder="Ask a yes/no question..." />
-                <button id="sendChatBtn">Ask</button>
+                <input id="chatInput" placeholder="প্রশ্ন করুন (হ্যাঁ/না)..." />
+                <button id="sendChatBtn">পাঠান</button>
               </div>
               <div class="quick-answers">
-                <button id="answerYesBtn" class="ans-yes">YES</button>
-                <button id="answerNoBtn" class="ans-no">NO</button>
+                <button id="answerYesBtn" class="ans-yes">হ্যাঁ</button>
+                <button id="answerNoBtn" class="ans-no">না</button>
               </div>
             </div>
 
@@ -99,40 +104,49 @@
               <div class="video-grid">
                 <div class="video-item">
                   <video id="localVideo" autoplay playsinline muted></video>
-                  <span id="localLabel" class="video-label">You</span>
+                  <span id="localLabel" class="video-label">আপনি</span>
                 </div>
                 <div class="video-item">
                   <video id="remoteVideo" autoplay playsinline></video>
-                  <span id="remoteLabel" class="video-label">Opponent</span>
+                  <span id="remoteLabel" class="video-label">প্রতিপক্ষ</span>
                 </div>
               </div>
               <div class="video-actions">
-                <button id="startCallBtn">Start Call</button>
-                <button id="endCallBtn" class="danger">End Call</button>
-                <button id="muteMicBtn">Mute</button>
-                <button id="muteCamBtn">Video Off</button>
+                <button id="startCallBtn">কল করুন</button>
+                <button id="endCallBtn" class="danger">কল কাটুন</button>
+                <button id="muteMicBtn">মিউট</button>
+                <button id="muteCamBtn">ভিডিও বন্ধ</button>
               </div>
             </div>
           </div>
         </aside>
       </div>
 
-      <!-- Game End Modal -->
-      <div id="gameEndModal" class="modal-overlay hidden">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h1 id="modalTitle">GAME OVER</h1>
-          </div>
-          <div class="modal-body">
-            <div id="modalResult" class="result-text"></div>
-            <div id="modalPlayers" class="players-info"></div>
-          </div>
-          <div class="modal-footer">
-            <button id="playAgainBtn" class="btn-primary">Play Again</button>
-          </div>
-        </div>
+      <!-- Native Banner Ad (Bottom) -->
+      <div class="ad-banner-native" style="margin-top: 20px; text-align: center;">
+        <script async="async" data-cfasync="false"
+          src="//pl28677561.effectivegatecpm.com/a2e4e4f9feaa4b6be75011f127b75270/invoke.js"></script>
+        <div id="container-a2e4e4f9feaa4b6be75011f127b75270"></div>
       </div>
-    </section>
+
+  </div>
+
+  <!-- Game End Modal -->
+  <div id="gameEndModal" class="modal-overlay hidden">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 id="modalTitle">খেলা শেষ</h1>
+      </div>
+      <div class="modal-body">
+        <div id="modalResult" class="result-text"></div>
+        <div id="modalPlayers" class="players-info"></div>
+      </div>
+      <div class="modal-footer">
+        <button id="playAgainBtn" class="btn-primary">আবার খেলুন</button>
+      </div>
+    </div>
+  </div>
+  </section>
   </div>
 
   <script src="/socket.io/socket.io.js"></script>

@@ -21,70 +21,25 @@ const io = new Server(server, {
 const rooms = new Map();
 
 const CHAR_SETS = {
-  naruto: [], // Will be populated from API
+  bd_politics: [],
+  naruto: [], 
   onepiece: [],
   classic: [],
 };
 
-// Cache for API data
-let apiDataLoaded = false;
-
-async function fetchNarutoCharacters() {
-  try {
-    const response = await fetch('https://dattebayo-api.onrender.com/characters?limit=100');
-    const data = await response.json();
-    if (data?.characters && Array.isArray(data.characters)) {
-      CHAR_SETS.naruto = data.characters
-        .filter(c => c.images && c.images.length > 0)
-        .map(c => ({
-          name: c.name,
-          img: c.images[0],
-        }));
-      console.log(`Loaded ${CHAR_SETS.naruto.length} Naruto characters from API`);
-    }
-  } catch (err) {
-    console.error('Failed to load Naruto characters:', err);
-    // Fallback if API fails
-    CHAR_SETS.naruto = [
-      { name: 'Naruto Uzumaki', img: 'https://cdn.myanimelist.net/images/characters/9/131317.jpg' },
-      { name: 'Sasuke Uchiha', img: 'https://cdn.myanimelist.net/images/characters/9/118437.jpg' },
-      { name: 'Sakura Haruno', img: 'https://cdn.myanimelist.net/images/characters/9/69275.jpg' },
-      { name: 'Kakashi Hatake', img: 'https://cdn.myanimelist.net/images/characters/7/284929.jpg' },
-      { name: 'Itachi Uchiha', img: 'https://cdn.myanimelist.net/images/characters/14/119567.jpg' },
-      { name: 'Hinata Hyuga', img: 'https://cdn.myanimelist.net/images/characters/16/220551.jpg' },
-      { name: 'Gaara', img: 'https://cdn.myanimelist.net/images/characters/16/61625.jpg' },
-      { name: 'Jiraiya', img: 'https://cdn.myanimelist.net/images/characters/15/45595.jpg' },
-      { name: 'Tsunade', img: 'https://cdn.myanimelist.net/images/characters/3/59385.jpg' },
-      { name: 'Orochimaru', img: 'https://cdn.myanimelist.net/images/characters/10/76085.jpg' },
-      { name: 'Shikamaru Nara', img: 'https://cdn.myanimelist.net/images/characters/14/66827.jpg' },
-      { name: 'Rock Lee', img: 'https://cdn.myanimelist.net/images/characters/14/71661.jpg' },
-      { name: 'Neji Hyuga', img: 'https://cdn.myanimelist.net/images/characters/14/230489.jpg' },
-      { name: 'Might Guy', img: 'https://cdn.myanimelist.net/images/characters/16/33139.jpg' },
-      { name: 'Temari', img: 'https://cdn.myanimelist.net/images/characters/7/49257.jpg' },
-      { name: 'Kankuro', img: 'https://cdn.myanimelist.net/images/characters/6/41066.jpg' },
-      { name: 'Pain', img: 'https://cdn.myanimelist.net/images/characters/4/11094.jpg' },
-      { name: 'Konan', img: 'https://cdn.myanimelist.net/images/characters/13/112630.jpg' },
-      { name: 'Kisame Hoshigaki', img: 'https://cdn.myanimelist.net/images/characters/12/91657.jpg' },
-      { name: 'Deidara', img: 'https://cdn.myanimelist.net/images/characters/3/70860.jpg' },
-      { name: 'Zabuza Momochi', img: 'https://cdn.myanimelist.net/images/characters/16/79427.jpg' },
-      { name: 'Haku', img: 'https://cdn.myanimelist.net/images/characters/10/39327.jpg' },
-      { name: 'Killer Bee', img: 'https://cdn.myanimelist.net/images/characters/15/78622.jpg' },
-      { name: 'Minato Namikaze', img: 'https://cdn.myanimelist.net/images/characters/12/35089.jpg' },
-    ];
-  }
-  apiDataLoaded = true;
+// Populate BD Politics characters (Placeholders)
+for (let i = 1; i <= 30; i++) {
+  CHAR_SETS.bd_politics.push({
+    name: `Neta ${i}`,
+    img: `https://placehold.co/150x150/006341/FFFFFF?text=Neta+${i}`, 
+  });
 }
 
-// Initial fetch
-fetchNarutoCharacters();
+function createCharacters(theme = 'bd_politics') {
+  // Force BD Politics theme
+  theme = 'bd_politics';
 
-function createCharacters(theme = 'naruto') {
-  // Force Naruto theme for now
-  if (theme !== 'naruto') theme = 'naruto';
-
-  const fullSet = CHAR_SETS[theme] && CHAR_SETS[theme].length > 0
-    ? CHAR_SETS[theme]
-    : CHAR_SETS.naruto; // Fallback
+  const fullSet = CHAR_SETS[theme];
 
   // Shuffle and pick 21 characters (3 rows x 7 cols)
   const shuffled = [...fullSet].sort(() => 0.5 - Math.random());
@@ -107,14 +62,14 @@ function randomCode(len = 6) {
   return out;
 }
 
-function createRoom(theme = 'naruto') {
+function createRoom(theme = 'bd_politics') {
   const code = randomCode(6);
   const room = {
     code,
-    theme: 'naruto', // Enforce Naruto
+    theme: 'bd_politics', 
     players: {},
     playerOrder: [],
-    board: createCharacters('naruto'),
+    board: createCharacters('bd_politics'),
     phase: 'selecting',
     currentTurn: null,
     winner: null,
