@@ -133,12 +133,21 @@ function setupPeerConnection() {
   if (pc) return pc;
   pc = new RTCPeerConnection({
     iceServers: [
+      // STUN servers
       { urls: 'stun:stun.l.google.com:19302' },
       { urls: 'stun:stun1.l.google.com:19302' },
       { urls: 'stun:stun2.l.google.com:19302' },
       { urls: 'stun:stun3.l.google.com:19302' },
       { urls: 'stun:stun4.l.google.com:19302' },
-      // OpenRelay TURN servers
+      { urls: 'stun:stun.stunprotocol.org:3478' },
+      { urls: 'stun:stun.services.mozilla.com' },
+      // ExpressTURN (PRIMARY - 1000 GB/month free)
+      {
+        urls: 'turn:free.expressturn.com:3478',
+        username: '000000002085951998',
+        credential: 'LIdKKE0Jy54dlBc+bduw/YqZiJI='
+      },
+      // Backup TURN servers
       {
         urls: 'turn:openrelay.metered.ca:80',
         username: 'openrelayproject',
@@ -149,15 +158,11 @@ function setupPeerConnection() {
         username: 'openrelayproject',
         credential: 'openrelayproject'
       },
-      // Numb STUN/TURN servers
       {
         urls: 'turn:numb.viagenie.ca',
         username: 'webrtc@live.com',
         credential: 'muazkh'
-      },
-      // Additional STUN servers
-      { urls: 'stun:stun.stunprotocol.org:3478' },
-      { urls: 'stun:stun.services.mozilla.com' }
+      }
     ],
   });
 
