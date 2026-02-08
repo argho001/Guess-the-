@@ -132,8 +132,22 @@ async function ensureLocalStream() {
 function setupPeerConnection() {
   if (pc) return pc;
   pc = new RTCPeerConnection({
-    iceServers: [{ urls: 'stun:stun.l.google.com:19302' }],
+    iceServers: [
+      { urls: 'stun:stun.l.google.com:19302' },
+      { urls: 'stun:stun1.l.google.com:19302' },
+      { urls: 'stun:stun2.l.google.com:19302' },
+      { urls: 'stun:stun3.l.google.com:19302' },
+      { urls: 'stun:stun4.l.google.com:19302' },
+    ],
   });
+
+  pc.oniceconnectionstatechange = () => {
+    console.log('[WebRTC] ICE State:', pc.iceConnectionState);
+    if (pc.iceConnectionState === 'failed' || pc.iceConnectionState === 'disconnected') {
+      alert('কল সংযোগ বিচ্ছিন্ন হয়েছে। দয়া করে আবার চেষ্টা করুন।');
+    }
+  };
+
   pc.onicecandidate = (e) => {
     if (e.candidate) {
       socket.emit('rtc-ice', { code: state.code, candidate: e.candidate });
