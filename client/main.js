@@ -160,7 +160,10 @@ function setupPeerConnection() {
 
   pc.onicecandidate = (e) => {
     if (e.candidate) {
+      console.log('[WebRTC] ICE Candidate Type:', e.candidate.type, 'Protocol:', e.candidate.protocol);
       socket.emit('rtc-ice', { code: state.code, candidate: e.candidate });
+    } else {
+      console.log('[WebRTC] ICE gathering complete');
     }
   };
   pc.ontrack = (e) => {
