@@ -183,11 +183,26 @@ async function startCall() {
   }
 }
 
+
+let candidateQueue = [];
+
 async function handleOffer({ sdp }) {
   console.log('[WebRTC] Received offer from peer');
   await ensureLocalStream();
   setupPeerConnection();
   await pc.setRemoteDescription(new RTCSessionDescription(sdp));
+
+  // Process queued candidates
+  while (candidateQueue.length > 0) {
+    const candidate = candidateQueue.shift();
+    try {
+      await pc.addIceCandidate(new RTCIceCandidate(candidate));
+      console.log('[WebRTC] Added queued ICE candidate');
+    } catch (err) {
+      console.error('[WebRTC] Error adding queued candidate:', err);
+    }
+  }
+
   localStream.getTracks().forEach((t) => {
     console.log('[WebRTC] Adding local track:', t.kind);
     pc.addTrack(t, localStream);
@@ -204,12 +219,28 @@ async function handleAnswer({ sdp }) {
   if (!pc) return;
   await pc.setRemoteDescription(new RTCSessionDescription(sdp));
   console.log('[WebRTC] Remote description set');
+
+  // Process queued candidates (if any arrived before answer)
+  while (candidateQueue.length > 0) {
+    const candidate = candidateQueue.shift();
+    try {
+      await pc.addIceCandidate(new RTCIceCandidate(candidate));
+      console.log('[WebRTC] Added queued ICE candidate');
+    } catch (err) {
+      console.error('[WebRTC] Error adding queued candidate:', err);
+    }
+  }
 }
 
 async function handleIce({ candidate }) {
   try {
     console.log('[WebRTC] Received ICE candidate');
-    if (pc && candidate) await pc.addIceCandidate(new RTCIceCandidate(candidate));
+    if (pc && pc.remoteDescription) {
+      await pc.addIceCandidate(new RTCIceCandidate(candidate));
+    } else {
+      console.log('[WebRTC] Queueing candidate (remote description not set)');
+      candidateQueue.push(candidate);
+    }
   } catch (err) {
     console.error('[WebRTC] ICE candidate error:', err);
   }
