@@ -27,26 +27,29 @@ const CHAR_SETS = {
   classic: [],
 };
 
-// Populate BD Politics characters
+// Populate BD Politics characters (Fixed layout as per image)
 CHAR_SETS.bd_politics = [
+  // Row 1
   { name: 'রুহুল কবির রিজভী', img: '/neta_images/ruhul.jpg' },
-  { name: 'আমান উল্লাহ আমান', img: '/neta_images/aman.png' },
-  { name: 'লুৎফুজ্জামান বাবর', img: '/neta_images/babor.png' },
-  { name: 'ববি হাজ্জাজ', img: '/neta_images/bobby.jpg' },
-  { name: 'মির্জা ফখরুল', img: '/neta_images/fakhrul.jpg' },
   { name: 'হাবিবুর রশিদ', img: '/neta_images/habibur-rashid.jpg' },
+  { name: 'আমান উল্লাহ আমান', img: '/neta_images/aman.png' },
+  { name: 'মির্জা ফখরুল', img: '/neta_images/fakhrul.jpg' },
   { name: 'হাসনাত আবদুল্লাহ', img: '/neta_images/hasnat.jpg' },
-  { name: 'ইশরাক হোসেন', img: '/neta_images/ishraque.jpg' },
-  { name: 'মামুনুল হক', img: '/neta_images/mamum.jpg' },
-  { name: 'নাহিদ ইসলাম', img: '/neta_images/nahid.jpg' },
-  { name: 'আন্দালিব রহমান পার্থ', img: '/neta_images/partho.png' },
+  { name: 'লুৎফুজ্জামান বাবর', img: '/neta_images/babor.png' },
+  // Row 2
   { name: 'নাসিরুদ্দিন পাটোয়ারী', img: '/neta_images/patowari.jpg' },
   { name: 'মির্জা আব্বাস', img: '/neta_images/abbas.jpg' },
+  { name: 'ইশরাক হোসেন', img: '/neta_images/ishraque.jpg' },
+  { name: 'ববি হাজ্জাজ', img: '/neta_images/bobby.jpg' },
+  { name: 'তাসনিম জারা', img: '/neta_images/tasnim.jpg' },
+  { name: 'শফিকুর রহমান', img: '/neta_images/shafique.jpg' },
+  // Row 3
+  { name: 'মামুনুল হক', img: '/neta_images/mamum.jpg' },
+  { name: 'তারেক রহমান', img: '/neta_images/tarek.jpg' },
+  { name: 'আন্দালিব রহমান পার্থ', img: '/neta_images/partho.png' },
+  { name: 'নাহিদ ইসলাম', img: '/neta_images/nahid.jpg' },
   { name: 'রুমিন ফারহানা', img: '/neta_images/rumeen.jpg' },
   { name: 'সারজিস আলম', img: '/neta_images/sarjis.jpg' },
-  { name: 'শফিকুর রহমান', img: '/neta_images/shafique.jpg' },
-  { name: 'তারেক রহমান', img: '/neta_images/tarek.jpg' },
-  { name: 'তাসনিম জারা', img: '/neta_images/tasnim.jpg' },
 ];
 
 function createCharacters(theme = 'bd_politics') {
