@@ -40,13 +40,13 @@ CHAR_SETS.bd_politics = [
   { name: 'মামুনুল হক', img: '/neta_images/mamum.jpg' },
   { name: 'নাহিদ ইসলাম', img: '/neta_images/nahid.jpg' },
   { name: 'আন্দালিব রহমান পার্থ', img: '/neta_images/partho.png' },
-  { name: 'সাইয়েদ আবদুল্লাহ', img: '/neta_images/patowari.jpg' },
+  { name: 'নাসিরুদ্দিন পাটোয়ারী', img: '/neta_images/patowari.jpg' },
   { name: 'রুহুল কবির রিজভী', img: '/neta_images/ruhul.jpg' },
   { name: 'রুমিন ফারহানা', img: '/neta_images/rumeen.jpg' },
   { name: 'সারজিস আলম', img: '/neta_images/sarjis.jpg' },
   { name: 'শফিকুল আলম', img: '/neta_images/shafique.jpg' },
   { name: 'তারেক রহমান', img: '/neta_images/tarek.jpg' },
-  { name: 'তাসনিম খলিল', img: '/neta_images/tasnim.jpg' },
+  { name: 'তাসনিম জারা', img: '/neta_images/tasnim.jpg' },
 ];
 
 function createCharacters(theme = 'bd_politics') {
