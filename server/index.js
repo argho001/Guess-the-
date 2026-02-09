@@ -44,7 +44,7 @@ CHAR_SETS.bd_politics = [
   { name: 'রুহুল কবির রিজভী', img: '/neta_images/ruhul.jpg' },
   { name: 'রুমিন ফারহানা', img: '/neta_images/rumeen.jpg' },
   { name: 'সারজিস আলম', img: '/neta_images/sarjis.jpg' },
-  { name: 'শফিকুল আলম', img: '/neta_images/shafique.jpg' },
+  { name: 'শফিকুর রহমান', img: '/neta_images/shafique.jpg' },
   { name: 'তারেক রহমান', img: '/neta_images/tarek.jpg' },
   { name: 'তাসনিম জারা', img: '/neta_images/tasnim.jpg' },
 ];
