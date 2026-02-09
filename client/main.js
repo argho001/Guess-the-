@@ -35,6 +35,7 @@ const ui = {
   modalResult: document.getElementById('modalResult'),
   modalPlayers: document.getElementById('modalPlayers'),
   playAgainBtn: document.getElementById('playAgainBtn'),
+  turnReminder: document.getElementById('turnReminder'),
 };
 
 let state = {
@@ -50,6 +51,8 @@ let state = {
   callActive: false,
   selectedTheme: 'bd_politics',
 };
+
+let turnTimer = null;
 
 // Theme selection removed (Single Theme Enforced)
 
@@ -81,6 +84,19 @@ function updateStatus() {
     else parts.push('💀 আপনি হেরেছেন');
   }
   ui.status.textContent = parts.join(' • ');
+
+  // Handle Turn Reminder Logic
+  if (turnTimer) {
+    clearTimeout(turnTimer);
+    turnTimer = null;
+  }
+  ui.turnReminder.classList.add('hidden');
+
+  if (state.phase === 'playing' && state.currentTurn === state.you) {
+    turnTimer = setTimeout(() => {
+      ui.turnReminder.classList.remove('hidden');
+    }, 30000); // 30 seconds
+  }
 
   // Show game end modal if game is finished
   if (state.phase === 'finished' && state.winner !== null) {

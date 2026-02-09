@@ -588,6 +588,41 @@ video {
   font-weight: 600;
 }
 
+.floating-reminder {
+  position: absolute;
+  top: 110%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(244, 42, 65, 0.9);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  white-space: nowrap;
+  box-shadow: 0 0 20px rgba(244, 42, 65, 0.4);
+  z-index: 100;
+  pointer-events: none;
+  animation: pulseReminder 1.5s infinite ease-in-out;
+}
+
+@keyframes pulseReminder {
+  0% {
+    transform: translateX(-50%) scale(1);
+    opacity: 0.9;
+  }
+
+  50% {
+    transform: translateX(-50%) scale(1.05);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateX(-50%) scale(1);
+    opacity: 0.9;
+  }
+}
+
 @media (max-width: 1024px) {
   .game-layout {
     display: flex;
