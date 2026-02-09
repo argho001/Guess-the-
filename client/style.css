@@ -588,38 +588,50 @@ video {
   font-weight: 600;
 }
 
-.floating-reminder {
-  position: absolute;
-  top: 110%;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(244, 42, 65, 0.9);
-  color: white;
-  padding: 8px 16px;
-  border-radius: 20px;
-  font-size: 0.9rem;
-  font-weight: 700;
-  white-space: nowrap;
-  box-shadow: 0 0 20px rgba(244, 42, 65, 0.4);
-  z-index: 100;
-  pointer-events: none;
-  animation: pulseReminder 1.5s infinite ease-in-out;
+.game-controls {
+  display: flex;
+  gap: 10px;
+  position: relative;
 }
 
-@keyframes pulseReminder {
+.floating-reminder {
+  position: absolute;
+  bottom: calc(100% + 12px);
+  left: 20px;
+  background: rgba(244, 42, 65, 0.95);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  white-space: nowrap;
+  box-shadow: 0 4px 15px rgba(244, 42, 65, 0.5);
+  z-index: 100;
+  pointer-events: none;
+  animation: bounceReminder 1.5s infinite ease-in-out;
+}
+
+.floating-reminder::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 20px;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 8px solid rgba(244, 42, 65, 0.95);
+}
+
+@keyframes bounceReminder {
   0% {
-    transform: translateX(-50%) scale(1);
-    opacity: 0.9;
+    transform: translateY(0);
   }
 
   50% {
-    transform: translateX(-50%) scale(1.05);
-    opacity: 1;
+    transform: translateY(-5px);
   }
 
   100% {
-    transform: translateX(-50%) scale(1);
-    opacity: 0.9;
+    transform: translateY(0);
   }
 }
 

@@ -55,8 +55,8 @@
         <div class="game-main">
           <div class="topbar-glass">
             <div id="status" class="status-badge"></div>
-            <div id="turnReminder" class="floating-reminder hidden">অপর পক্ষকে সুযোগ দিন</div>
             <div class="game-controls">
+              <div id="turnReminder" class="floating-reminder hidden">অপর পক্ষকে সুযোগ দিন</div>
               <button id="endTurnBtn" class="btn-small">চাল শেষ</button>
               <button id="guessModeBtn" class="btn-small highlight">নেতা গেস করুন</button>
             </div>
@@ -130,25 +130,24 @@
           src="//pl28677561.effectivegatecpm.com/a2e4e4f9feaa4b6be75011f127b75270/invoke.js"></script>
         <div id="container-a2e4e4f9feaa4b6be75011f127b75270"></div>
       </div>
+    </section>
 
-  </div>
-
-  <!-- Game End Modal -->
-  <div id="gameEndModal" class="modal-overlay hidden">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 id="modalTitle">খেলা শেষ</h1>
-      </div>
-      <div class="modal-body">
-        <div id="modalResult" class="result-text"></div>
-        <div id="modalPlayers" class="players-info"></div>
-      </div>
-      <div class="modal-footer">
-        <button id="playAgainBtn" class="btn-primary">আবার খেলুন</button>
+    <!-- Game End Modal -->
+    <div id="gameEndModal" class="modal-overlay hidden">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 id="modalTitle">খেলা শেষ</h1>
+        </div>
+        <div class="modal-body">
+          <div id="modalResult" class="result-text"></div>
+          <div id="modalPlayers" class="players-info"></div>
+        </div>
+        <div class="modal-footer">
+          <button id="playAgainBtn" class="btn-primary">আবার খেলুন</button>
+        </div>
       </div>
     </div>
-  </div>
-  </section>
+    </section>
   </div>
 
   <script src="/socket.io/socket.io.js"></script>
