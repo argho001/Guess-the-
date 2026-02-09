@@ -22,6 +22,7 @@ const ui = {
   endCallBtn: document.getElementById('endCallBtn'),
   muteMicBtn: document.getElementById('muteMicBtn'),
   muteCamBtn: document.getElementById('muteCamBtn'),
+  fixAudioBtn: document.getElementById('fixAudioBtn'),
   localVideo: document.getElementById('localVideo'),
   remoteVideo: document.getElementById('remoteVideo'),
   modeChatBtn: document.getElementById('modeChatBtn'),
@@ -182,12 +183,18 @@ function setupPeerConnection() {
     }
   };
   pc.ontrack = (e) => {
-    console.log('Remote track received:', e.track.kind);
-    const [stream] = e.streams;
-    remoteStream = stream;
-    ui.remoteVideo.srcObject = remoteStream;
-    // Ensure video plays (some browsers need explicit play call)
-    ui.remoteVideo.play().catch(err => console.log('Video autoplay prevented:', err));
+    console.log('[WebRTC] Remote track received:', e.track.kind);
+    if (!remoteStream) {
+      remoteStream = new MediaStream();
+      ui.remoteVideo.srcObject = remoteStream;
+    }
+    remoteStream.addTrack(e.track);
+
+    // Ensure remote video is unmuted and plays
+    ui.remoteVideo.muted = false;
+    ui.remoteVideo.play().catch(err => {
+      console.warn('[WebRTC] Autoplay prevented, waiting for user interaction:', err);
+    });
   };
   return pc;
 }
@@ -298,6 +305,21 @@ function teardownCall() {
   ui.localVideo.srcObject = null;
   ui.remoteVideo.srcObject = null;
   state.callActive = false;
+}
+
+function fixAudio() {
+  console.log('[WebRTC] Manually fixing audio...');
+  if (ui.remoteVideo && remoteStream) {
+    ui.remoteVideo.muted = false;
+    ui.remoteVideo.play()
+      .then(() => alert('অডিও ঠিক করা হয়েছে!'))
+      .catch(err => {
+        console.error('[WebRTC] Manual play failed:', err);
+        alert('অডিও ঠিক করা যায়নি। দয়া করে পেজ রিফ্রেশ করুন।');
+      });
+  } else {
+    alert('কোন সচল কল নেই।');
+  }
 }
 
 function renderSecret() {
@@ -511,6 +533,8 @@ ui.muteCamBtn.onclick = () => {
   tracks.forEach((t) => (t.enabled = !t.enabled));
   ui.muteCamBtn.textContent = tracks.some((t) => t.enabled) ? 'ভিডিও বন্ধ' : 'ভিডিও চালু';
 };
+
+ui.fixAudioBtn.onclick = () => fixAudio();
 
 ui.playAgainBtn.onclick = () => {
   location.reload();

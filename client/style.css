@@ -582,6 +582,12 @@ video {
   font-weight: 600;
 }
 
+.btn-fix {
+  background: linear-gradient(135deg, #f59e0b, #d97706) !important;
+  color: white !important;
+  font-weight: 600;
+}
+
 @media (max-width: 1024px) {
   .game-layout {
     display: flex;
