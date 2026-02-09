@@ -27,13 +27,27 @@ const CHAR_SETS = {
   classic: [],
 };
 
-// Populate BD Politics characters (Placeholders)
-for (let i = 1; i <= 30; i++) {
-  CHAR_SETS.bd_politics.push({
-    name: `Neta ${i}`,
-    img: `https://placehold.co/150x150/006341/FFFFFF?text=Neta+${i}`,
-  });
-}
+// Populate BD Politics characters
+CHAR_SETS.bd_politics = [
+  { name: 'মির্জা আব্বাস', img: '/neta_images/abbas.jpg' },
+  { name: 'আমান উল্লাহ আমান', img: '/neta_images/aman.png' },
+  { name: 'লুৎফুজ্জামান বাবর', img: '/neta_images/babor.png' },
+  { name: 'ববি হাজ্জাজ', img: '/neta_images/bobby.jpg' },
+  { name: 'মির্জা ফখরুল', img: '/neta_images/fakhrul.jpg' },
+  { name: 'হাবিবুর রশিদ', img: '/neta_images/habibur-rashid.jpg' },
+  { name: 'হাসনাত আবদুল্লাহ', img: '/neta_images/hasnat.jpg' },
+  { name: 'ইশরাক হোসেন', img: '/neta_images/ishraque.jpg' },
+  { name: 'মামুনুল হক', img: '/neta_images/mamum.jpg' },
+  { name: 'নাহিদ ইসলাম', img: '/neta_images/nahid.jpg' },
+  { name: 'আন্দালিব রহমান পার্থ', img: '/neta_images/partho.png' },
+  { name: 'সাইয়েদ আবদুল্লাহ', img: '/neta_images/patowari.jpg' },
+  { name: 'রুহুল কবির রিজভী', img: '/neta_images/ruhul.jpg' },
+  { name: 'রুমিন ফারহানা', img: '/neta_images/rumeen.jpg' },
+  { name: 'সারজিস আলম', img: '/neta_images/sarjis.jpg' },
+  { name: 'শফিকুল আলম', img: '/neta_images/shafique.jpg' },
+  { name: 'তারেক রহমান', img: '/neta_images/tarek.jpg' },
+  { name: 'তাসনিম খলিল', img: '/neta_images/tasnim.jpg' },
+];
 
 function createCharacters(theme = 'bd_politics') {
   // Force BD Politics theme
@@ -41,9 +55,9 @@ function createCharacters(theme = 'bd_politics') {
 
   const fullSet = CHAR_SETS[theme];
 
-  // Shuffle and pick 21 characters (3 rows x 7 cols)
+  // Shuffle and pick 18 characters
   const shuffled = [...fullSet].sort(() => 0.5 - Math.random());
-  const selected = shuffled.slice(0, 21);
+  const selected = shuffled.slice(0, 18);
 
   return selected.map((c, i) => ({
     id: `c${i + 1}`,

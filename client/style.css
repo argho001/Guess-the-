@@ -289,8 +289,8 @@ button.disabled {
 
 .board-grid {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  /* Fixed 7 columns */
+  grid-template-columns: repeat(6, 1fr);
+  /* Fixed 6 columns */
   /* Smaller minimum width */
   gap: 10px;
   overflow-y: auto;
