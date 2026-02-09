@@ -635,6 +635,52 @@ video {
   }
 }
 
+.turn-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(135deg, #006a4e 0%, #00905c 100%);
+  color: white;
+  padding: 30px 60px;
+  border-radius: 50px;
+  font-size: 2.5rem;
+  font-weight: 800;
+  z-index: 9999;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5),
+    0 0 20px rgba(244, 42, 65, 0.4);
+  border: 4px solid #f42a41;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  pointer-events: none;
+  animation: turnPop 2.5s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
+}
+
+@keyframes turnPop {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -40%) scale(0.5);
+  }
+
+  15% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+
+  25% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  75% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -60%) scale(0.8);
+  }
+}
+
 @media (max-width: 1024px) {
   .game-layout {
     display: flex;

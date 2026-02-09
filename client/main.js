@@ -36,6 +36,7 @@ const ui = {
   modalPlayers: document.getElementById('modalPlayers'),
   playAgainBtn: document.getElementById('playAgainBtn'),
   turnReminder: document.getElementById('turnReminder'),
+  turnPopup: document.getElementById('turnPopup'),
 };
 
 let state = {
@@ -45,6 +46,7 @@ let state = {
   players: [],
   phase: 'selecting',
   currentTurn: null,
+  previousTurn: null,
   winner: null,
   crossed: new Set(),
   guessMode: false,
@@ -96,6 +98,14 @@ function updateStatus() {
     turnTimer = setTimeout(() => {
       ui.turnReminder.classList.remove('hidden');
     }, 30000); // 30 seconds
+
+    // Show Floating Popup on turn start
+    if (state.currentTurn !== state.previousTurn) {
+      showTurnPopup();
+      state.previousTurn = state.currentTurn;
+    }
+  } else if (state.currentTurn !== state.you) {
+    state.previousTurn = state.currentTurn;
   }
 
   // Show game end modal if game is finished
@@ -426,6 +436,19 @@ function addMessage(msg) {
   div.textContent = msg.text;
   ui.messages.appendChild(div);
   ui.messages.scrollTop = ui.messages.scrollHeight;
+}
+
+function showTurnPopup() {
+  ui.turnPopup.classList.remove('hidden');
+  // Re-trigger animation by removing and adding class or cloning node
+  const newEl = ui.turnPopup.cloneNode(true);
+  ui.turnPopup.parentNode.replaceChild(newEl, ui.turnPopup);
+  ui.turnPopup = newEl; // Update reference
+
+  // Hide after animation finishes
+  setTimeout(() => {
+    ui.turnPopup.classList.add('hidden');
+  }, 2500);
 }
 
 // Events
